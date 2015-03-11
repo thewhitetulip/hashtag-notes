@@ -11,6 +11,7 @@ import com.materialnotes.data.Note;
 import com.materialnotes.data.dao.NoteDAO;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 import javax.inject.Inject;
@@ -49,7 +50,6 @@ public class NoteSQLiteDAO implements NoteDAO {
         SQLiteDatabase database = databaseHelper.getReadableDatabase();
         try {
             String[] columns = {NoteEntry._ID,
-                    NoteEntry.TITLE,
                     NoteEntry.CONTENT,
                     NoteEntry.CREATED_AT,
                     NoteEntry.UPDATED_AT};
@@ -58,7 +58,6 @@ public class NoteSQLiteDAO implements NoteDAO {
             for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
                 Note note = new Note();
                 note.setId(cursor.getLong(cursor.getColumnIndexOrThrow(NoteEntry._ID)));
-                note.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(NoteEntry.TITLE)));
                 note.setContent(cursor.getString(cursor.getColumnIndexOrThrow(NoteEntry.CONTENT)));
                 note.setCreatedAt(new Date(cursor.getLong(cursor.getColumnIndexOrThrow(NoteEntry.CREATED_AT))));
                 note.setUpdatedAt(new Date(cursor.getLong(cursor.getColumnIndexOrThrow(NoteEntry.UPDATED_AT))));
@@ -76,6 +75,7 @@ public class NoteSQLiteDAO implements NoteDAO {
             }
             database.close();
         }
+        Collections.reverse(result);
         return result;
     }
 
@@ -91,7 +91,6 @@ public class NoteSQLiteDAO implements NoteDAO {
         database.beginTransaction();
         try {
             ContentValues values = new ContentValues();
-            values.put(NoteEntry.TITLE, note.getTitle());
             values.put(NoteEntry.CONTENT, note.getContent());
             values.put(NoteEntry.CREATED_AT, note.getCreatedAt().getTime());
             values.put(NoteEntry.UPDATED_AT, note.getUpdatedAt().getTime());
@@ -118,7 +117,6 @@ public class NoteSQLiteDAO implements NoteDAO {
         database.beginTransaction();
         try {
             ContentValues values = new ContentValues();
-            values.put(NoteEntry.TITLE, note.getTitle());
             values.put(NoteEntry.CONTENT, note.getContent());
             values.put(NoteEntry.UPDATED_AT, note.getUpdatedAt().getTime());
             String[] whereArgs = {String.valueOf(note.getId())};
@@ -157,7 +155,6 @@ public class NoteSQLiteDAO implements NoteDAO {
     /** Constantes de la tabla de notas. */
     private static class NoteEntry implements BaseColumns {
         private static final String TABLE_NAME = "note";
-        private static final String TITLE = "title";
         private static final String CONTENT = "content";
         private static final String CREATED_AT = "created_at";
         private static final String UPDATED_AT = "updated_at";

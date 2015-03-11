@@ -35,7 +35,6 @@ public class ViewNoteActivity extends RoboActionBarActivity {
 
     @InjectView(R.id.scroll_view)          private ScrollView scrollView;
     @InjectView(R.id.edit_note_button)     private FloatingActionButton editNoteButton;
-    @InjectView(R.id.note_title)           private TextView noteTitleText;
     @InjectView(R.id.note_content)         private TextView noteContentText;
     @InjectView(R.id.note_created_at_date) private TextView noteCreatedAtDateText;
     @InjectView(R.id.note_updated_at_date) private TextView noteUpdatedAtDateText;
@@ -82,7 +81,6 @@ public class ViewNoteActivity extends RoboActionBarActivity {
         });
         note = (Note) getIntent().getSerializableExtra(EXTRA_NOTE); // Recuperar la nota del Intent
         // Mostrar la información de la nota en el layout
-        noteTitleText.setText(note.getTitle());
         noteContentText.setText(note.getContent());
         noteCreatedAtDateText.setText(DATETIME_FORMAT.format(note.getCreatedAt()));
         noteUpdatedAtDateText.setText(DATETIME_FORMAT.format(note.getUpdatedAt()));

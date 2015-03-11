@@ -13,7 +13,6 @@ public class Note implements Serializable {
     private static final long serialVersionUID = -831930284387787342L;
 
     private Long id;
-    private String title;
     private String content;
     private Date createdAt;
     private Date updatedAt;
@@ -26,13 +25,6 @@ public class Note implements Serializable {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
     public String getContent() {
         return content;
@@ -65,7 +57,6 @@ public class Note implements Serializable {
         result = prime * result + ((content == null) ? 0 : content.hashCode());
         result = prime * result + ((createdAt == null) ? 0 : createdAt.hashCode());
         result = prime * result + ((id == null) ? 0 : id.hashCode());
-        result = prime * result + ((title == null) ? 0 : title.hashCode());
         result = prime * result + ((updatedAt == null) ? 0 : updatedAt.hashCode());
         return result;
     }
@@ -85,9 +76,6 @@ public class Note implements Serializable {
         if (id == null) {
             if (other.id != null) return false;
         } else if (!id.equals(other.id)) return false;
-        if (title == null) {
-            if (other.title != null) return false;
-        } else if (!title.equals(other.title)) return false;
         if (updatedAt == null) {
             if (other.updatedAt != null) return false;
         } else if (!updatedAt.equals(other.updatedAt)) return false;
@@ -96,7 +84,7 @@ public class Note implements Serializable {
 
     @Override
     public String toString() {
-        return new StringBuilder().append("Note [id=").append(id).append(", title=").append(title)
+        return new StringBuilder().append("Note [id=").append(id)
                 .append(", content=").append(content).append(", createdAt=").append(createdAt)
                 .append(", updatedAt=").append(updatedAt).append("]").toString();
     }

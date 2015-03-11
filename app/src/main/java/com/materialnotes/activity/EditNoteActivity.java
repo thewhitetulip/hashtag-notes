@@ -28,7 +28,6 @@ public class EditNoteActivity extends RoboActionBarActivity {
 
     private static final String EXTRA_NOTE = "EXTRA_NOTE";
 
-    @InjectView(R.id.note_title)   private EditText noteTitleText;
     @InjectView(R.id.note_content) private EditText noteContentText;
 
     private Note note;
@@ -74,7 +73,6 @@ public class EditNoteActivity extends RoboActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Muestra la flecha hacia atrás
         note = (Note) getIntent().getSerializableExtra(EXTRA_NOTE); // Recuperar la nota del Intent
         if (note != null) { // Editar nota existente
-            noteTitleText.setText(note.getTitle());
             noteContentText.setText(note.getContent());
         } else { // Nueva nota
             note = new Note();
@@ -108,7 +106,7 @@ public class EditNoteActivity extends RoboActionBarActivity {
 
     /** @return {@code true} si tiene titulo y contenido; {@code false} en cualquier otro caso. */
     private boolean isNoteFormOk() {
-        return !Strings.isNullOrBlank(noteTitleText.getText().toString()) && !Strings.isNullOrBlank(noteContentText.getText().toString());
+        return  !Strings.isNullOrBlank(noteContentText.getText().toString());
     }
 
     /**
@@ -116,7 +114,6 @@ public class EditNoteActivity extends RoboActionBarActivity {
      * como resultado de esta actividad.
      */
     private void setNoteResult() {
-        note.setTitle(noteTitleText.getText().toString().trim());
         note.setContent(noteContentText.getText().toString().trim());
         note.setUpdatedAt(new Date());
         Intent resultIntent = new Intent();
@@ -127,9 +124,6 @@ public class EditNoteActivity extends RoboActionBarActivity {
     /** Muestra mensajes de validación de la forma de la nota. */
     private void validateNoteForm() {
         StringBuilder message = null;
-        if (Strings.isNullOrBlank(noteTitleText.getText().toString())) {
-            message = new StringBuilder().append(getString(R.string.title_required));
-        }
         if (Strings.isNullOrBlank(noteContentText.getText().toString())) {
             if (message == null) message = new StringBuilder().append(getString(R.string.content_required));
             else message.append("\n").append(getString(R.string.content_required));

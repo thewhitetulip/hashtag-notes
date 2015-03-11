@@ -1,5 +1,8 @@
 package com.materialnotes.widget;
 
+import android.graphics.Color;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,9 @@ import com.materialnotes.data.Note;
 
 import java.text.DateFormat;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 /**
  * Adaptador de notas. Actua como intermediario entre la vista y los datos.
@@ -102,9 +108,18 @@ public class NotesAdapter extends BaseAdapter {
         // Inicializa la vista con los datos de la nota
         NoteViewWrapper noteViewWrapper = data.get(position);
         holder.noteIdText.setText(String.valueOf(noteViewWrapper.note.getId()));
-        holder.noteTitleText.setText(noteViewWrapper.note.getTitle());
         // Corta la cadena a 80 caracteres y le agrega "..."
-        holder.noteContentText.setText(noteViewWrapper.note.getContent().length() >= 80 ? noteViewWrapper.note.getContent().substring(0, 80).concat("...") : noteViewWrapper.note.getContent());
+
+        SpannableString hashText = new SpannableString(noteViewWrapper.note.getContent());
+        Matcher matcher = Pattern.compile("#([A-Za-z0-9_-]+)").matcher(hashText);
+        while (matcher.find())
+        {
+            hashText.setSpan(new ForegroundColorSpan(Color.BLUE), matcher.start(), matcher.end(), 0);
+        }
+
+
+        holder.noteContentText.setText(hashText);
+        
         holder.noteDateText.setText(DATETIME_FORMAT.format(noteViewWrapper.note.getUpdatedAt()));
         // Cambia el color del fondo si es seleccionado
         if (noteViewWrapper.isSelected) holder.parent.setBackgroundColor(parent.getContext().getResources().getColor(R.color.selected_note));
@@ -117,7 +132,6 @@ public class NotesAdapter extends BaseAdapter {
     private static class ViewHolder {
 
         private TextView noteIdText;
-        private TextView noteTitleText;
         private TextView noteContentText;
         private TextView noteDateText;
 
@@ -131,7 +145,6 @@ public class NotesAdapter extends BaseAdapter {
         private ViewHolder(View parent) {
             this.parent = parent;
             noteIdText = (TextView) parent.findViewById(R.id.note_id);
-            noteTitleText = (TextView) parent.findViewById(R.id.note_title);
             noteContentText = (TextView) parent.findViewById(R.id.note_content);
             noteDateText = (TextView) parent.findViewById(R.id.note_date);
         }

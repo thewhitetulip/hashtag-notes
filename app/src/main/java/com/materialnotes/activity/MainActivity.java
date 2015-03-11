@@ -237,7 +237,6 @@ public class MainActivity extends RoboActionBarActivity {
         for (NotesAdapter.NoteViewWrapper noteViewWrapper : notesData) {
             // Buscar la nota vieja para actulizarla en la vista
             if (noteViewWrapper.getNote().getId().equals(updatedNote.getId())) {
-                noteViewWrapper.getNote().setTitle(updatedNote.getTitle());
                 noteViewWrapper.getNote().setContent(updatedNote.getContent());
                 noteViewWrapper.getNote().setUpdatedAt(updatedNote.getUpdatedAt());
             }
@@ -262,7 +261,7 @@ public class MainActivity extends RoboActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Ver la nota al hacer click
-                startActivityForResult(ViewNoteActivity.buildIntent(MainActivity.this, notesData.get(position).getNote()), EDIT_NOTE_RESULT_CODE);
+                startActivityForResult(EditNoteActivity.buildIntent(MainActivity.this, notesData.get(position).getNote()), EDIT_NOTE_RESULT_CODE);
             }
         });
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -274,7 +273,6 @@ public class MainActivity extends RoboActionBarActivity {
                 listAdapter.notifyDataSetChanged();
                 selectedPositions.add(position);
                 actionMode = startSupportActionMode(actionModeCallback);
-                actionMode.setTitle(String.valueOf(selectedPositions.size()));
                 return true;
             }
         });
@@ -296,7 +294,6 @@ public class MainActivity extends RoboActionBarActivity {
                     selectedPositions.remove((Object)position); // no quiero el índice sino el objeto
                     if (selectedPositions.isEmpty()) actionMode.finish();
                     else {
-                        actionMode.setTitle(String.valueOf(selectedPositions.size()));
                         notesData.get(position).setSelected(false);
                         listAdapter.notifyDataSetChanged();
                     }
@@ -304,7 +301,6 @@ public class MainActivity extends RoboActionBarActivity {
                     notesData.get(position).setSelected(true);
                     listAdapter.notifyDataSetChanged();
                     selectedPositions.add(position);
-                    actionMode.setTitle(String.valueOf(selectedPositions.size()));
                 }
             }
         });

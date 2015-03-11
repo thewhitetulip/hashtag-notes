@@ -8,8 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         card_view:cardCornerRadius="4dp"
-        card_view:cardElevation="4dp"
-        card_view:contentPadding="10dp"
+        card_view:cardElevation="1dp"
+        card_view:contentPadding="5dp"
         card_view:cardUseCompatPadding="true">
 
         <RelativeLayout
@@ -23,21 +23,9 @@
                 android:visibility="gone" />
 
             <TextView
-                android:id="@+id/note_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginBottom="8dp"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#ff000000"
-                android:textStyle="bold" />
-
-            <TextView
                 android:id="@+id/note_content"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/note_title"
+                android:layout_height="fill_parent"
                 android:layout_marginBottom="8dp"
                 android:textColor="#ff000000" />
 
