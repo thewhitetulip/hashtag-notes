@@ -202,7 +202,7 @@ public class MainActivity extends RoboActionBarActivity {
         Note note = EditNoteActivity.getExtraNote(data);
         noteDAO.insert(note);
         NotesAdapter.NoteViewWrapper noteViewWrapper = new NotesAdapter.NoteViewWrapper(note);
-        notesData.add(noteViewWrapper);
+        notesData.add(0,noteViewWrapper);
         updateView();
         listAdapter.notifyDataSetChanged();
     }
