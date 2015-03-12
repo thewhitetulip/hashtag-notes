@@ -2,7 +2,10 @@ package com.materialnotes.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -13,6 +16,8 @@ import com.materialnotes.data.Note;
 import com.materialnotes.util.Strings;
 
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import roboguice.activity.RoboActionBarActivity;
 import roboguice.inject.ContentView;
@@ -73,7 +78,13 @@ public class EditNoteActivity extends RoboActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Muestra la flecha hacia atrás
         note = (Note) getIntent().getSerializableExtra(EXTRA_NOTE); // Recuperar la nota del Intent
         if (note != null) { // Editar nota existente
-            noteContentText.setText(note.getContent());
+            SpannableString hashText = new SpannableString(note.getContent());
+            Matcher matcher = Pattern.compile("#([A-Za-z0-9_-]+)").matcher(hashText);
+            while (matcher.find())
+            {
+                hashText.setSpan(new ForegroundColorSpan(Color.BLUE), matcher.start(), matcher.end(), 0);
+            }
+            noteContentText.setText(hashText);
         } else { // Nueva nota
             note = new Note();
             note.setCreatedAt(new Date());

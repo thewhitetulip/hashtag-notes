@@ -2,7 +2,10 @@ package com.materialnotes.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ScrollView;
@@ -15,6 +18,8 @@ import com.materialnotes.view.ShowHideOnScroll;
 import com.shamanland.fab.FloatingActionButton;
 
 import java.text.DateFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import roboguice.activity.RoboActionBarActivity;
 import roboguice.inject.ContentView;
@@ -81,7 +86,15 @@ public class ViewNoteActivity extends RoboActionBarActivity {
         });
         note = (Note) getIntent().getSerializableExtra(EXTRA_NOTE); // Recuperar la nota del Intent
         // Mostrar la información de la nota en el layout
-        noteContentText.setText(note.getContent());
+
+        SpannableString hashText = new SpannableString(note.getContent());
+        Matcher matcher = Pattern.compile("#([A-Za-z0-9_-]+)").matcher(hashText);
+        while (matcher.find())
+        {
+            hashText.setSpan(new ForegroundColorSpan(Color.BLUE), matcher.start(), matcher.end(), 0);
+        }
+
+        noteContentText.setText(hashText);
         noteCreatedAtDateText.setText(DATETIME_FORMAT.format(note.getCreatedAt()));
         noteUpdatedAtDateText.setText(DATETIME_FORMAT.format(note.getUpdatedAt()));
     }

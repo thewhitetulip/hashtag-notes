@@ -3,6 +3,13 @@
     xmlns:NotepadApp="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_search"
+        NotepadApp:showAsAction="always"
+        android:title="@string/search_hint"
+        NotepadApp:actionViewClass="android.widget.SearchView"
+        android:icon="@android:drawable/ic_menu_search"/>
+
+    <item
         android:id="@+id/action_about_info"
         NotepadApp:showAsAction="never"
         android:title="@string/action_about_notice" />

@@ -5,6 +5,7 @@
 
     <!-- MainActivity strings -->
     <string name="title_activity_notes_list">Notes</string>
+    <string name="search_hint">Search</string>
     <string name="no_notes">No notes yet</string>
     <string name="action_delete">Delete</string>
     <string name="action_about_notice">About</string>
