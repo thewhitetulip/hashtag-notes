@@ -189,6 +189,10 @@ public class MainActivity extends RoboActionBarActivity {
                                     .show();
                         } else mode.finish();
                         return true;
+                    case R.id.action_share:
+                        if (!selectedPositions.isEmpty()){
+                            shareNotes(selectedPositions);
+                        }
                     default:
                         return false;
                 }
@@ -240,11 +244,31 @@ public class MainActivity extends RoboActionBarActivity {
         listAdapter.notifyDataSetChanged();
     }
 
+    private void shareNotes(ArrayList<Integer> selectedPositions) {
+        ArrayList<NotesAdapter.NoteViewWrapper> toRemoveList = new ArrayList<>(selectedPositions.size());
+        StringBuilder shareBody = new StringBuilder();
+        // Primero borra de la base de datos
+        for (int position : selectedPositions) {
+            NotesAdapter.NoteViewWrapper noteViewWrapper = notesData.get(position);
+            shareBody.append(noteViewWrapper.getNote().getContent());
+            shareBody.append("\n");
+        }
+        // Y luego de la vista (no al mismo tiempo porque pierdo las posiciones que hay que borrar)
+        for (NotesAdapter.NoteViewWrapper noteToRemove : toRemoveList) notesData.remove(noteToRemove);
+
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody.toString());
+        startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_using)));
+    }
+
     /**
      * Borra notas de la lista y de la fuente de datos.
      *
      * @param selectedPositions las posiciones de las notas en la lista.
      */
+
     private void deleteNotes(ArrayList<Integer> selectedPositions) {
         ArrayList<NotesAdapter.NoteViewWrapper> toRemoveList = new ArrayList<>(selectedPositions.size());
         // Primero borra de la base de datos

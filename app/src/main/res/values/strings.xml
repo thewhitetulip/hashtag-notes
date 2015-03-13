@@ -12,6 +12,7 @@
     <string name="action_licenses_notice">Open source licenses</string>
     <string name="delete_notes_alert">Delete %s note(s)?</string>
 
+    <string name="share_using">Share with:</string>
     <!-- Licenses dialog -->
     <string name="dialog_licenses_notice_title">Open source licenses</string>
 
@@ -22,10 +23,10 @@
     <!-- EditNoteActivity strings -->
     <string name="title_activity_edit_note">Edit note</string>
     <string name="action_save">Save</string>
-    <string name="hint_note_title">Title</string>
+    <string name="action_share">Share</string>
     <string name="hint_note_content">Content</string>
-    <string name="title_required">The note must have a title</string>
-    <string name="content_required">The note must have content</string>
+    <string name="content_required">Rant must have content</string>
+    <string name="content_less_than_140">Rant should not exceed 140 characters</string>
 
     <!-- ViewNoteActivity strings -->
     <string name="title_activity_view_note">Note</string>

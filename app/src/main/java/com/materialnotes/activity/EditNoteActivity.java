@@ -36,6 +36,7 @@ public class EditNoteActivity extends RoboActionBarActivity {
     @InjectView(R.id.note_content) private EditText noteContentText;
 
     private Note note;
+    public int maxSize=140;
 
     /**
      * Construye el Intent para llamar a esta actividad con una nota ya existente.
@@ -117,7 +118,9 @@ public class EditNoteActivity extends RoboActionBarActivity {
 
     /** @return {@code true} si tiene titulo y contenido; {@code false} en cualquier otro caso. */
     private boolean isNoteFormOk() {
-        return  !Strings.isNullOrBlank(noteContentText.getText().toString());
+        String content=noteContentText.getText().toString();
+
+       return  !Strings.isNullOrBlank(content) && content.length()<=maxSize;
     }
 
     /**
@@ -126,19 +129,28 @@ public class EditNoteActivity extends RoboActionBarActivity {
      */
     private void setNoteResult() {
         note.setContent(noteContentText.getText().toString().trim());
-        note.setUpdatedAt(new Date());
-        Intent resultIntent = new Intent();
-        resultIntent.putExtra(EXTRA_NOTE, note);
-        setResult(RESULT_OK, resultIntent);
+            note.setUpdatedAt(new Date());
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra(EXTRA_NOTE, note);
+            setResult(RESULT_OK, resultIntent);
+
+
     }
 
     /** Muestra mensajes de validación de la forma de la nota. */
     private void validateNoteForm() {
         StringBuilder message = null;
-        if (Strings.isNullOrBlank(noteContentText.getText().toString())) {
+        String noteContent = noteContentText.getText().toString();
+        if (Strings.isNullOrBlank(noteContent)) {
             if (message == null) message = new StringBuilder().append(getString(R.string.content_required));
             else message.append("\n").append(getString(R.string.content_required));
         }
+
+        if(noteContent.length()>maxSize){
+            if (message == null) message = new StringBuilder().append(getString(R.string.content_less_than_140));
+            else message.append("\n").append(getString(R.string.content_less_than_140));
+        }
+
         if (message != null) {
             Toast.makeText(getApplicationContext(),
                     message,
