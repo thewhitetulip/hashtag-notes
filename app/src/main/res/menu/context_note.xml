@@ -2,17 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:NotepadApp="http://schemas.android.com/apk/res-auto" >
 
+
+    <item
+        android:id="@+id/action_share"
+        NotepadApp:showAsAction="always"
+        android:icon="@android:drawable/ic_menu_share"
+        android:title="@string/action_share"
+        />
+
     <item
         android:id="@+id/action_delete"
-        NotepadApp:showAsAction="ifRoom"
+        NotepadApp:showAsAction="always"
         android:icon="@drawable/ic_action_delete"
         android:title="@string/action_delete"/>
 
     <item
-        android:id="@+id/action_share"
+        android:id="@+id/action_select_all"
         NotepadApp:showAsAction="ifRoom"
-        android:icon="@android:drawable/ic_menu_share"
-        android:title="@string/action_share"
-        />
+        android:title="@string/action_select_all"/>
 
 </menu>

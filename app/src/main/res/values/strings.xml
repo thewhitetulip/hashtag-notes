@@ -4,9 +4,9 @@
     <string name="app_name">Rants</string>
 
     <!-- MainActivity strings -->
-    <string name="title_activity_notes_list">Notes</string>
+    <string name="title_activity_notes_list">Rants</string>
     <string name="search_hint">Search</string>
-    <string name="no_notes">No notes yet</string>
+    <string name="no_notes">No Rants yet</string>
     <string name="action_delete">Delete</string>
     <string name="action_about_notice">About</string>
     <string name="action_licenses_notice">Open source licenses</string>
@@ -21,7 +21,7 @@
     <string name="copyright_info">&#169; Suraj Patil</string>
 
     <!-- EditNoteActivity strings -->
-    <string name="title_activity_edit_note">Edit note</string>
+    <string name="title_activity_edit_note">Edit rant</string>
     <string name="action_save">Save</string>
     <string name="action_share">Share</string>
     <string name="hint_note_content">Content</string>
@@ -29,9 +29,11 @@
     <string name="content_less_than_140">Rant should not exceed 140 characters</string>
 
     <!-- ViewNoteActivity strings -->
-    <string name="title_activity_view_note">Note</string>
-    <string name="action_edit_note">Edit note</string>
+    <string name="title_activity_view_rants">Rants</string>
+    <string name="action_edit_note">Edit rant</string>
     <string name="label_created_at">Created at:</string>
     <string name="label_updated_at">Updated at:</string>
+
+    <string name="action_select_all">Select all</string>
 
 </resources>
