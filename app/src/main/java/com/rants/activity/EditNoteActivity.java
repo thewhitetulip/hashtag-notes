@@ -1,4 +1,4 @@
-package com.materialnotes.activity;
+package com.rants.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,12 +8,14 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.materialnotes.R;
-import com.materialnotes.data.Note;
-import com.materialnotes.util.Strings;
+import com.rants.R;
+import com.rants.data.Note;
+import com.rants.util.Strings;
 
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -32,6 +34,8 @@ import roboguice.inject.InjectView;
 public class EditNoteActivity extends RoboActionBarActivity {
 
     private static final String EXTRA_NOTE = "EXTRA_NOTE";
+    private static final int EDIT_NOTE_RESULT_CODE = 8;
+    private static final String EXTRA_UPDATED_NOTE = "EXTRA_UPDATED_NOTE";
 
     @InjectView(R.id.note_content) private EditText noteContentText;
 
@@ -49,6 +53,10 @@ public class EditNoteActivity extends RoboActionBarActivity {
         Intent intent = new Intent(context, EditNoteActivity.class);
         intent.putExtra(EXTRA_NOTE, note);
         return intent;
+    }
+
+    public static Note getExtraUpdatedNote(Intent intent) {
+        return (Note) intent.getExtras().get(EXTRA_UPDATED_NOTE);
     }
 
     /**
@@ -90,12 +98,29 @@ public class EditNoteActivity extends RoboActionBarActivity {
             note = new Note();
             note.setCreatedAt(new Date());
         }
+
+        Button btnSave = (Button) findViewById(R.id.btn_save);
+        Button btnHash = (Button) findViewById(R.id.btn_hash);
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddNoteOrShowToast();
+            }
+        });
+
+        btnHash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText editText = (EditText) findViewById(R.id.note_content);
+                editText.append("#");
+            }
+        });
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.edit_note, menu);
         return true;
     }
 
@@ -106,12 +131,6 @@ public class EditNoteActivity extends RoboActionBarActivity {
             case android.R.id.home:
                 onBackPressed();
                 return true;
-            case R.id.action_save:
-                if (isNoteFormOk()) {
-                    setNoteResult();
-                    finish();
-                } else validateNoteForm();
-                return true;
             default: return super.onOptionsItemSelected(item);
         }
     }
@@ -119,7 +138,6 @@ public class EditNoteActivity extends RoboActionBarActivity {
     /** @return {@code true} si tiene titulo y contenido; {@code false} en cualquier otro caso. */
     private boolean isNoteFormOk() {
         String content=noteContentText.getText().toString();
-
        return  !Strings.isNullOrBlank(content) && content.length()<=maxSize;
     }
 
@@ -139,25 +157,27 @@ public class EditNoteActivity extends RoboActionBarActivity {
 
     /** Muestra mensajes de validación de la forma de la nota. */
     private void validateNoteForm() {
-        StringBuilder message = null;
+        String message = null;
         String noteContent = noteContentText.getText().toString();
         if (Strings.isNullOrBlank(noteContent)) {
-            if (message == null) message = new StringBuilder().append(getString(R.string.content_required));
-            else message.append("\n").append(getString(R.string.content_required));
+            message = getString(R.string.content_required);
         }
 
         if(noteContent.length()>maxSize){
-            if (message == null) message = new StringBuilder().append(getString(R.string.content_less_than_140));
-            else message.append("\n").append(getString(R.string.content_less_than_140));
+            message = getString(R.string.content_less_than_140);
         }
 
         if (message != null) {
-            Toast.makeText(getApplicationContext(),
-                    message,
-                    Toast.LENGTH_LONG)
-                    .show();
+            Toast.makeText(getApplicationContext(), message,Toast.LENGTH_LONG).show();
         }
     }
+
+    private void AddNoteOrShowToast(){
+         if (isNoteFormOk()) {
+             setNoteResult();
+             finish();
+        } else validateNoteForm();
+     }
 
     /** {@inheritDoc} */
     @Override
@@ -166,4 +186,6 @@ public class EditNoteActivity extends RoboActionBarActivity {
         setResult(RESULT_CANCELED, new Intent());
         finish();
     }
+
+
 }

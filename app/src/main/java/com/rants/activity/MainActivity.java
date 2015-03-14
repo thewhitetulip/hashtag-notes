@@ -1,4 +1,4 @@
-package com.materialnotes.activity;
+package com.rants.activity;
 
 import android.app.AlertDialog;
 import android.app.SearchManager;
@@ -16,12 +16,12 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
-import com.materialnotes.R;
-import com.materialnotes.data.Note;
-import com.materialnotes.data.dao.NoteDAO;
-import com.materialnotes.view.ShowHideOnScroll;
-import com.materialnotes.widget.AboutNoticeDialog;
-import com.materialnotes.widget.NotesAdapter;
+import com.rants.R;
+import com.rants.data.Note;
+import com.rants.data.dao.NoteDAO;
+import com.rants.view.ShowHideOnScroll;
+import com.rants.widget.AboutNoticeDialog;
+import com.rants.widget.NotesAdapter;
 
 import com.shamanland.fab.FloatingActionButton;
 
@@ -95,16 +95,12 @@ public class MainActivity extends RoboActionBarActivity {
             public boolean onQueryTextChange(String newText)
             {
                 // this is your adapter that will be filtered
-
-                System.out.println("on text chnge text: "+newText);
                 return true;
             }
             @Override
             public boolean onQueryTextSubmit(String query)
             {
                 // this is your adapter that will be filtered
-
-                System.out.println("on query submit: "+query);
                 return true;
             }
         };
@@ -122,17 +118,26 @@ public class MainActivity extends RoboActionBarActivity {
                 new AboutNoticeDialog()
                         .show(getSupportFragmentManager(), "dialog_about_notice");
                 return true;
-            case R.id.action_licenses_info:
-                WebView webView = new WebView(this);
-                webView.loadUrl("file:///android_asset/licenses.html");
-                new AlertDialog.Builder(this)
-                        .setTitle(R.string.dialog_licenses_notice_title)
-                        .setView(webView)
-                        .setCancelable(true)
-                        .show();
+            case R.id.action_import:
+                importNotes();
+                return true;
+
+            case R.id.action_export:
+                exportNotes();
                 return true;
             default: return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void exportNotes() {
+        for (Note note : noteDAO.fetchAll()) {
+            StringBuilder exportNotes = new StringBuilder();
+
+        }
+        }
+
+    private void importNotes() {
+
     }
 
     /** {@inheritDoc} */
@@ -193,6 +198,9 @@ public class MainActivity extends RoboActionBarActivity {
                         if (!selectedPositions.isEmpty()){
                             shareNotes(selectedPositions);
                         }
+                        return true;
+                    case R.id.action_select_all:
+                        selectAll();
                     default:
                         return false;
                 }
@@ -206,6 +214,14 @@ public class MainActivity extends RoboActionBarActivity {
                 resetSelectedListItems();
             }
         };
+    }
+
+    private void selectAll() {
+        for ( int i=0; i < listAdapter.getCount(); i++) {
+            selectedPositions.add(i);
+            notesData.get(i).setSelected(true);
+            listAdapter.notifyDataSetChanged();
+        }
     }
 
     /** Inicializa el adaptador de notas. */
@@ -243,22 +259,20 @@ public class MainActivity extends RoboActionBarActivity {
         updateView();
         listAdapter.notifyDataSetChanged();
     }
-
+/*
+this method is called when the contextual action button of share is pressed
+ */
     private void shareNotes(ArrayList<Integer> selectedPositions) {
-        ArrayList<NotesAdapter.NoteViewWrapper> toRemoveList = new ArrayList<>(selectedPositions.size());
         StringBuilder shareBody = new StringBuilder();
         // Primero borra de la base de datos
         for (int position : selectedPositions) {
             NotesAdapter.NoteViewWrapper noteViewWrapper = notesData.get(position);
             shareBody.append(noteViewWrapper.getNote().getContent());
-            shareBody.append("\n");
+            shareBody.append(",").append(noteViewWrapper.getNote().getCreatedAt()).append("\n");
         }
-        // Y luego de la vista (no al mismo tiempo porque pierdo las posiciones que hay que borrar)
-        for (NotesAdapter.NoteViewWrapper noteToRemove : toRemoveList) notesData.remove(noteToRemove);
 
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
-        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody.toString());
         startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_using)));
     }
@@ -289,7 +303,7 @@ public class MainActivity extends RoboActionBarActivity {
      * @param data los datos de la actividad de edición de notas.
      */
     private void updateNote(Intent data) {
-        Note updatedNote = ViewNoteActivity.getExtraUpdatedNote(data);
+        Note updatedNote = EditNoteActivity.getExtraUpdatedNote(data);
         noteDAO.update(updatedNote);
         for (NotesAdapter.NoteViewWrapper noteViewWrapper : notesData) {
             // Buscar la nota vieja para actulizarla en la vista
@@ -319,6 +333,7 @@ public class MainActivity extends RoboActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Ver la nota al hacer click
                 startActivityForResult(ViewNoteActivity.buildIntent(MainActivity.this, notesData.get(position).getNote()), EDIT_NOTE_RESULT_CODE);
+
             }
         });
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

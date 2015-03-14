@@ -1,8 +1,8 @@
-package com.materialnotes.data.source.sqlite;
+package com.rants.data.source.sqlite;
 
 import android.util.Log;
 
-import com.materialnotes.util.Strings;
+import com.rants.util.Strings;
 
 import java.io.BufferedReader;
 import java.io.IOException;

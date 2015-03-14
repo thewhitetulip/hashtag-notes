@@ -1,9 +1,9 @@
-package com.materialnotes.data.dao;
+package com.rants.data.dao;
 
 import com.google.inject.ImplementedBy;
 
-import com.materialnotes.data.Note;
-import com.materialnotes.data.dao.impl.sqlite.NoteSQLiteDAO;
+import com.rants.data.Note;
+import com.rants.data.dao.impl.sqlite.NoteSQLiteDAO;
 
 import java.util.List;
 

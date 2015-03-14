@@ -1,4 +1,4 @@
-package com.materialnotes.util;
+package com.rants.util;
 
 /**
  * Clase con metodos y constantes miscelaneos de String.

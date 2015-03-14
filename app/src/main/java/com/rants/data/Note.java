@@ -1,4 +1,4 @@
-package com.materialnotes.data;
+package com.rants.data;
 
 import java.io.Serializable;
 import java.util.Date;

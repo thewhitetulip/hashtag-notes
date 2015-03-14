@@ -1,4 +1,4 @@
-package com.materialnotes.widget;
+package com.rants.widget;
 
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 
-import com.materialnotes.R;
+import com.rants.R;
 
 import roboguice.fragment.RoboDialogFragment;
 import roboguice.inject.InjectView;

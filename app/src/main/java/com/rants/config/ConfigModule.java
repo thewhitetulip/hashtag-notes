@@ -1,4 +1,4 @@
-package com.materialnotes.config;
+package com.rants.config;
 
 import android.app.Application;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
 
-import com.materialnotes.data.source.sqlite.NotesDatabaseHelper;
+import com.rants.data.source.sqlite.NotesDatabaseHelper;
 
 /**
  * Clase para cablear dependencias de la aplicación

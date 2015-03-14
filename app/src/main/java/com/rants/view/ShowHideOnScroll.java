@@ -1,11 +1,11 @@
-package com.materialnotes.view;
+package com.rants.view;
 
 import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
-import com.materialnotes.R;
+import com.rants.R;
 
 import com.shamanland.fab.FloatingActionButton;
 import com.shamanland.fab.ScrollDetector;

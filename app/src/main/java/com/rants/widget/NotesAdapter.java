@@ -1,4 +1,4 @@
-package com.materialnotes.widget;
+package com.rants.widget;
 
 import android.graphics.Color;
 import android.text.SpannableString;
@@ -7,14 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Filter;
 import android.widget.TextView;
 
-import com.materialnotes.R;
-import com.materialnotes.data.Note;
+import com.rants.R;
+import com.rants.data.Note;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -91,7 +89,7 @@ public class NotesAdapter extends BaseAdapter {
 
     /**
      * Muestra los datos de la nota en la posición dada en una instancia del componente visual
-     * {@link com.materialnotes.R.layout#notes_row}.
+     * {@link com.rants.R.layout#notes_row}.
      *
      * @see <a href="http://bit.ly/MJqzXb">Hold View Objects in a View Holder</a>
      * @param position la posición de la nota en curso.

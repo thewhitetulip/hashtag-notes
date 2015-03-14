@@ -1,4 +1,4 @@
-package com.materialnotes.data.source.sqlite;
+package com.rants.data.source.sqlite;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

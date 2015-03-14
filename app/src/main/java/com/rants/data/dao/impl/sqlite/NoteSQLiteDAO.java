@@ -1,4 +1,4 @@
-package com.materialnotes.data.dao.impl.sqlite;
+package com.rants.data.dao.impl.sqlite;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -7,8 +7,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 import android.util.Log;
 
-import com.materialnotes.data.Note;
-import com.materialnotes.data.dao.NoteDAO;
+import com.rants.data.Note;
+import com.rants.data.dao.NoteDAO;
 
 import java.util.ArrayList;
 import java.util.Collections;

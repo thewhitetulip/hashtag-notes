@@ -1,4 +1,4 @@
-package com.materialnotes.activity;
+package com.rants.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,10 +11,10 @@ import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.materialnotes.R;
-import com.materialnotes.data.Note;
+import com.rants.R;
+import com.rants.data.Note;
 
-import com.materialnotes.view.ShowHideOnScroll;
+import com.rants.view.ShowHideOnScroll;
 import com.shamanland.fab.FloatingActionButton;
 
 import java.text.DateFormat;
