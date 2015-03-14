@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.materialnotes">
+    package="com.rants">
 
     <application
         android:allowBackup="true"
@@ -9,10 +9,10 @@
         android:theme="@style/Theme.NotepadApp">
         <meta-data
             android:name="roboguice.modules"
-            android:value="com.materialnotes.config.ConfigModule" />
+            android:value="com.rants.config.ConfigModule" />
 
         <activity
-            android:name="com.materialnotes.activity.MainActivity"
+            android:name="com.rants.activity.MainActivity"
             android:label="@string/title_activity_notes_list">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,12 +22,12 @@
         </activity>
 
         <activity
-            android:name="com.materialnotes.activity.EditNoteActivity"
+            android:name="com.rants.activity.EditNoteActivity"
             android:label="@string/title_activity_edit_note" />
 
         <activity
-            android:name="com.materialnotes.activity.ViewNoteActivity"
-            android:label="@string/title_activity_view_note" />
+            android:name="com.rants.activity.ViewNoteActivity"
+            android:label="@string/title_activity_view_rants" />
 
     </application>
 
