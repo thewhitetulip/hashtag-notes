@@ -7,9 +7,35 @@
     <EditText
         android:id="@+id/note_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:minLines="6"
         android:gravity="start"
-        android:inputType="textMultiLine"
+        android:inputType="textMultiLine|textCapSentences|textAutoCorrect"
+        android:paddingTop="10dp"
         android:hint="@string/hint_note_content" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="end"
+        >
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:id="@+id/btn_hash"
+            android:text="#"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:id="@+id/btn_save"
+            android:text="@string/action_save"
+            />
+
+        </LinearLayout>
 
 </LinearLayout>
