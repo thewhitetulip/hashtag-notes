@@ -1,18 +1,24 @@
 package com.rants.widget;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rants.R;
 import com.rants.data.Note;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,9 +30,15 @@ import java.util.regex.Pattern;
  * @author Daniel Pedraza Arcega
  * @see <a href="http://bit.ly/1vZt3ny">Building Layouts with an Adapter</a>
  */
-public class NotesAdapter extends BaseAdapter {
+public class NotesAdapter extends BaseAdapter implements Filterable{
 
-    /** Wrapper para notas. Util para cambiar el fondo de los item seleccionados. */
+    private static final DateFormat DATETIME_FORMAT = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
+
+    private final List<NoteViewWrapper> data;
+    private List<NoteViewWrapper> filtered_data;
+
+
+     /** Wrapper para notas. Util para cambiar el fondo de los item seleccionados. */
     public static class NoteViewWrapper {
 
         private final Note note;
@@ -50,9 +62,7 @@ public class NotesAdapter extends BaseAdapter {
         }
     }
 
-    private static final DateFormat DATETIME_FORMAT = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
 
-    private final List<NoteViewWrapper> data;
 
     /**
      * Constructor.
@@ -61,12 +71,13 @@ public class NotesAdapter extends BaseAdapter {
      */
     public NotesAdapter(List<NoteViewWrapper> data) {
         this.data = data;
+        this.filtered_data = data;
     }
 
     /** @return cuantos datos hay en la lista de notas. */
     @Override
     public int getCount() {
-        return data.size();
+        return filtered_data.size();
     }
 
     /**
@@ -75,7 +86,7 @@ public class NotesAdapter extends BaseAdapter {
      */
     @Override
     public NoteViewWrapper getItem(int position) {
-        return data.get(position);
+        return filtered_data.get(position);
     }
 
     /**
@@ -106,7 +117,8 @@ public class NotesAdapter extends BaseAdapter {
             convertView.setTag(holder);
         } else holder = (ViewHolder) convertView.getTag(); // ya existe, solo es reciclarlo
         // Inicializa la vista con los datos de la nota
-        NoteViewWrapper noteViewWrapper = data.get(position);
+
+        NoteViewWrapper noteViewWrapper = filtered_data.get(position);
         holder.noteIdText.setText(String.valueOf(noteViewWrapper.note.getId()));
         // Corta la cadena a 80 caracteres y le agrega "..."
 
@@ -119,7 +131,7 @@ public class NotesAdapter extends BaseAdapter {
 
 
         holder.noteContentText.setText(hashText);
-        
+
         holder.noteDateText.setText(DATETIME_FORMAT.format(noteViewWrapper.note.getUpdatedAt()));
         // Cambia el color del fondo si es seleccionado
         if (noteViewWrapper.isSelected) holder.parent.setBackgroundColor(parent.getContext().getResources().getColor(R.color.selected_note));
@@ -149,4 +161,43 @@ public class NotesAdapter extends BaseAdapter {
             noteDateText = (TextView) parent.findViewById(R.id.note_date);
         }
     }
+
+@Override
+public Filter getFilter() {
+Filter filter = new Filter(){
+
+    @Override
+    protected FilterResults performFiltering(CharSequence query) {
+        FilterResults results = new FilterResults();
+        ArrayList<NoteViewWrapper> filtered = new ArrayList<>();
+        query = query.toString().toLowerCase();
+        if(query!=null && query.length()>0){
+            for(int i=0;i<data.size();i++){
+                String dataName = data.get(i).getNote().getContent().toLowerCase();
+                if (dataName.contains(query)){
+                    filtered.add(data.get(i));
+                }
+
+            }
+            results.count = filtered.size();
+            results.values = filtered;
+
+        }else{
+            results.count = data.size();
+            results.values = data;
+        }
+
+        Log.d("publishing", results.values.toString());
+        return results;
+    }
+
+    @Override
+    protected void publishResults(CharSequence constraint, FilterResults results) {
+        filtered_data =  (ArrayList<NoteViewWrapper>) results.values;
+        NotesAdapter.this.notifyDataSetChanged();
+    }
+};
+
+return filter;
+}
 }
