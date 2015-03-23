@@ -1,12 +1,11 @@
-MaterialNotes
+Rants
 ===========
 
-Note-taking app with Material Design for Android.
+I created this app because I wanted to privately rant about stuff, the app can be used to either take short notes or rant about anything, hashtags are supported.
 
-![Demo](https://dl.dropboxusercontent.com/u/1995295/img/MaterialNotes/demo.gif)
 
-License
-=======
+
+This app is based on the material-notes app written by Daniel Pedraza-Arcega
 
     Copyright 2014 Daniel Pedraza-Arcega
 
