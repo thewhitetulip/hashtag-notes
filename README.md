@@ -1,7 +1,7 @@
-Rants
+hashtag-notes
 ===========
 
-I created this app because I wanted to privately rant about stuff, the app can be used to either take short notes or rant about anything, hashtags are supported.
+This app can be used to take notes using hashtags, it was forked from the project material-notes from Daniel Pedraza-Arcega, along with notes, this app can be used as a private twitter clone since it comes with support for hashtags.
 
 
 
