@@ -36,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_below="@+id/note_content"
                 android:textSize="12sp"
                 android:textStyle="italic"
